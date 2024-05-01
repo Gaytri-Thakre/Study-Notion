@@ -16,9 +16,12 @@ const courseSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Section"
     },
-    tags:{
+    category:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Tags"
+    },
+    tag:{
+        type:String
     },
     ratingsAndReview:{
         type:mongoose.Schema.Types.OnjectId,

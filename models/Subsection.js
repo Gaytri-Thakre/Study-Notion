@@ -1,14 +1,14 @@
 const mongoose = require("mongoose")
 const subsectionSchema = mongoose.Schema({
     title:{
-        type:Sting,
+        type:String,
         required:true,
     },
     timeduration:{
         type:String,
     },
     videoUrl:{
-        type:Sting,
+        type:String,
         required:true,
     },
     description:{

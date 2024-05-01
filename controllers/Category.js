@@ -1,5 +1,5 @@
-const Tags = recuire("../models/tags");
-exports.createTag = async(req,res)=>{
+const Category= require("../models/tags");
+exports.createCategory = async(req,res)=>{
     try{
         // fetch data
         const {name,description} = req.body;
@@ -11,32 +11,32 @@ exports.createTag = async(req,res)=>{
             })
         }
         // create entry in DB
-        const tagDetails=await Tags.create({
+        const CategoryDetails=await Category.create({
             name:name,
             description:description,
         })
-        console.log(tagDetails);
+        console.log(CategoryDetails);
         return res.status(200).json({
             success:true,
-            message:"Tag created successfully",
+            message:"category created successfully",
         })
 
     }catch(error){
         return res.status(500).json({
             success:false,
-            message:"Something went wrong in Tag creation"
+            message:"Something went wrong in Category creation"
         })
     }
 }
 
 // get all Tags.
-exports.showAllTags=async(req,res)=>{
+exports.showAllCategory=async(req,res)=>{
     try{
         // find all tags from  db of tag model
-        const allTags= await Tags.find({},{name:true,description:true});
+        const allTags= await Category.find({},{name:true,description:true});
         return res.status(200).json({
             succes:true,
-            message:"All Tags returned Successfully",
+            message:"All Categories returned Successfully",
             data:allTags
         })
 
