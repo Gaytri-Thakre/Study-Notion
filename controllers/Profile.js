@@ -90,4 +90,72 @@ exports.getAllUserDetails = async(req,res)=>{
             message:error.message,
         })
     }
+};
+
+// getEnrolledCourses
+exports.getEnrolledCourses = async (req,res) =>{
+    try{
+        // get user id
+        const userid = req.user.id
+        // get user details and populate to courses
+        const userDetails = await User.findOne({
+            _id:userid
+        })
+        .populate("courses")
+        .exec()
+        // validation
+        if(!userDetails){
+            return res.status(400).json({
+                success:false,
+                message:`Could not find user with id: ${userDetails}`
+            })
+        }
+        // return response
+        return res.status(200).json({
+            success:true,
+            data:userDetails.courses
+        })
+
+    }catch(error){
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
+    
+};
+// updateDisplayPicture
+exports.updateDisplayPicture = async(req,res) =>{
+    try{
+        // get the image
+        const displayPicture = req.files.displayPicture
+        // get user id
+        const userId = req.user.id
+        // upload a image
+        const image = await uploadImageToCloudinary(
+            displayPicture,
+            process.env.FOLDER_NAME,
+            1000,
+            1000
+        )
+        console.log(image)
+        // updateProfile
+        const updatedProfile = await User.findByIdAndUpdate(
+            { _id: userId },
+            { imageUrl: image.secure_url },
+            { new: true }
+        )
+        // return response
+        res.send({
+            success: true,
+            message: `Image Updated successfully`,
+            data: updatedProfile,
+        })
+
+    }catch(error){
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
 }
