@@ -31,4 +31,4 @@ OTPSchema.pre("save",async function(){
     await sendVerificationEmail(this.email,this.otp);
     next();
 })
-module.exports = mongoose.Schema("OTP",OTPSchema)
+module.export = mongoose.model("OTP",OTPSchema)
